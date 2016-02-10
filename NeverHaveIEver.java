@@ -1,10 +1,13 @@
 import java.util.*;
 import java.lang.*;
+import java.util.ArrayList;
 
 class NeverHaveIEver{
 	final int maxScore;
 	Player[] players;
-	ArrayList<String> theNevers;
+	public static List<String> theNevers;
+	boolean isGameOver;
+	Player theWinner;
 
 	NeverHaveIEver(){
 		maxScore = 5;
@@ -14,7 +17,7 @@ class NeverHaveIEver{
 
 	public void initialize(Player[] thePlayers){
 		for(int i = 0; i < thePlayers.length; i++){
-			players[i] = thePlayers[i]
+			players[i] = thePlayers[i];
 		}
 	}
 
@@ -30,14 +33,39 @@ class NeverHaveIEver{
 	}
 
 	public String getQuestion(int i){
-		if(i < theNevers.length()){
-			return theNevers[i];
+		if(i < theNevers.size()){
+			return this.theNevers.get(i);
 		}
 		else{
-			return "Not a valid question..."
+			return "";
 		}
 	}
 
+	public boolean isThereAWinner(){
+		int activePlayers = 0;
+		Player winner = new Player();
+		for(int i = 0; i < players.length; i++){
+			if(players[i].getScore() > 0){
+				activePlayers ++;
+				theWinner = players[i];
+			}
+		}
+		if(activePlayers > 1){
+			return false;
+		}
+		else if(activePlayers == 0){
+			gameOver();
+			return false;
+		}
+		else{
+			this.theWinner = winner;
+			return true;
+		}
+	}
+
+	public void gameOver(){
+		this.isGameOver = true;
+	}
 
 
 
